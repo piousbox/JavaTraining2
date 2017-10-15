@@ -1,4 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Training2 app_name modified</string>
+    <string name="app_name">News and GPS Tracking App</string>
     <string name="title_item_detail">Item Detail name modified</string>
+
+    <string name="id_label">The ID 3</string>
+    <string name="id_value">[id]</string>
+    <string name="content_label">The Content is</string>
+    <string name="content_value">[content]</string>
+    <string name="action_refresh">Refresh</string>
+
 </resources>

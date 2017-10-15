@@ -22,9 +22,52 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context=".MainActivity$PlaceholderFragment"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" >
+            android:background="@drawable/my_custom_background"
+
+            <TextView
+                android:id="@+id/id_label"
+                android:text="@string/id_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/content_label"
+                android:text="@string/content_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/id_label"
+                android:layout_alignParentLeft="true" />
+            <TextView
+                android:id="@+id/id_value"
+                android:text="@string/id_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/id_label"
+                android:layout_marginLeft="60dp" />
+            <TextView
+                android:id="@+id/content_value"
+                android:text="@string/content_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/content_label"
+                android:layout_alignLeft="@+id/id_value" />
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/test_btn"
+                android:text="yadayada" />
+
+        </RelativeLayout>
 
         <include layout="@layout/item_list" />
     </FrameLayout>
@@ -36,6 +79,14 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom"
+        app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
 
 </android.support.design.widget.CoordinatorLayout>
