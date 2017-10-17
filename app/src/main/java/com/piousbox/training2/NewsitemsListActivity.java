@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.piousbox.training2.rest.Newsitem;
 import com.piousbox.training2.rest.SiteNews;
@@ -40,8 +38,8 @@ public class NewsitemsListActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter); */
 
         // From: http://www.vogella.com/tutorials/AndroidListView/article.html
-        final ListView listView = (ListView) findViewById(R.id.listview);
-
+        // this works! _vp_ 20171017
+        /* final ListView listView = (ListView) findViewById(R.id.listview);
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
@@ -52,14 +50,14 @@ public class NewsitemsListActivity extends AppCompatActivity {
             list.add(values[i]);
         }
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter); */
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.v("abba", "onStart()");
-        new SiteNews().execute();
+        new SiteNews(this).execute();
     }
 
     // trash
