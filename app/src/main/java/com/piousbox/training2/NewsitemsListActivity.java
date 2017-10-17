@@ -11,6 +11,9 @@ import java.util.*;
 import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 
 import com.piousbox.training2.rest.*;
 import com.piousbox.training2.dummy.*;
@@ -37,8 +40,30 @@ public class NewsitemsListActivity extends AppCompatActivity {
         String[] from = { "php_key","c_key","android_key","hacking_key" };
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.newsitems_list, R.id.n_item, from);
         listView.setAdapter(arrayAdapter); */
+
+        // From: http://www.vogella.com/tutorials/AndroidListView/article.html
+        final ListView listView = (ListView) findViewById(R.id.listview);
+
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+                "Android", "iPhone", "WindowsMobile" };
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
+        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStart() {
+        Log.v("abba", "onStart()");
+        new SiteNews().execute();
+    }
+
+    // trash
     public class ThisAdapter extends RecyclerView.Adapter<ThisAdapter.ViewHolder> {
         public ArrayList<Newsitem> mItems = new ArrayList<Newsitem>();
 
@@ -82,4 +107,5 @@ public class NewsitemsListActivity extends AppCompatActivity {
         }
 
     }
+
 }
