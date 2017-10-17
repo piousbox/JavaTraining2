@@ -29,7 +29,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        // FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,13 +39,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             }
         });
 
-        fab2.setOnClickListener(new View.OnClickListener() {
+        /* fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Call me, maybe?", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        }); */
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import java.util.*;
 import android.view.*;
+import android.widget.LinearLayout;
 import android.widget.Adapter;
 
 import com.piousbox.training2.rest.*;
@@ -24,9 +25,13 @@ public class NewsitemsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        toolbar.setTitle(getTitle()); */
+
+        /* LinearLayout item = (LinearLayout)findViewById(R.id.n_layout);
+        View child = getLayoutInflater().inflate(R.layout.newsitems_list2, null);
+        item.addView(child); */
 
         /* ListView listView = getLayoutInflater().inflate(R.layout.n_list3, parent, false);
         String[] from = { "php_key","c_key","android_key","hacking_key" };

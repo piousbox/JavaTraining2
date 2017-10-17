@@ -123,8 +123,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(SiteNews siteNews) {
-            TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingContentText.setText(SiteNews.getContent());
+            // TextView greetingContentText = (TextView) findViewById(R.id.content_value);
+            // greetingContentText.setText(SiteNews.getContent());
         }
 
     }
