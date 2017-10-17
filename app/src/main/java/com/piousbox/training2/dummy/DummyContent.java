@@ -5,12 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
 public class DummyContent {
     public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();

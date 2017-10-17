@@ -23,6 +23,7 @@ import android.view.MenuItem;
 
 import com.piousbox.training2.dummy.DummyContent;
 import com.piousbox.training2.rest.Greeting;
+import com.piousbox.training2.rest.SiteNews;
 
 import java.util.List;
 
@@ -37,8 +38,6 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
-        Log.v("herehere", "herehere");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,9 +91,6 @@ public class ItemListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -108,15 +104,16 @@ public class ItemListActivity extends AppCompatActivity {
         }
     }
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, Greeting> {
+    private class HttpRequestTask extends AsyncTask<Void, Void, SiteNews> {
+
         @Override
-        protected Greeting doInBackground(Void... params) {
+        protected SiteNews doInBackground(Void... params) {
             try {
-                final String url = "http://rest-service.guides.spring.io/greeting";
+                final String url = "http://manager.piousbox.com/api/sites/view/travel-guide.mobi.json";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Greeting greeting = restTemplate.getForObject(url, Greeting.class);
-                return greeting;
+                SiteNews siteNews = restTemplate.getForObject(url, SiteNews.class);
+                return siteNews;
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
             }
@@ -125,11 +122,9 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Greeting greeting) {
-            TextView greetingIdText = (TextView) findViewById(R.id.id_value);
+        protected void onPostExecute(SiteNews siteNews) {
             TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingIdText.setText(greeting.getId());
-            greetingContentText.setText(greeting.getContent());
+            greetingContentText.setText(SiteNews.getContent());
         }
 
     }
