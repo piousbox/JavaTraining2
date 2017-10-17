@@ -1,22 +1,20 @@
 package com.piousbox.training2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.support.annotation.NonNull;
-
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import java.util.*;
-import android.view.*;
-import android.widget.LinearLayout;
-import android.widget.Adapter;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.piousbox.training2.rest.Newsitem;
+import com.piousbox.training2.rest.SiteNews;
 
-import com.piousbox.training2.rest.*;
-import com.piousbox.training2.dummy.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewsitemsListActivity extends AppCompatActivity {
 
@@ -59,6 +57,7 @@ public class NewsitemsListActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        super.onStart();
         Log.v("abba", "onStart()");
         new SiteNews().execute();
     }

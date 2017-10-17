@@ -24,6 +24,7 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -35,14 +36,10 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'com.android.support:design:26.+'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-    compile files('libs/javax.json.jar')
-    compile files('libs/json-simple-1.1.1.jar')
-    compile files('libs/org.json.jar')
-    compile files('libs/json.jar')
-    compile files('libs/commons-io.jar')
 }

@@ -3,51 +3,72 @@ package com.piousbox.training2.rest;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
-import java.net.URL;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
+import java.io.InputStreamReader;
 
 public class SiteNews extends AsyncTask<Void, Void, String[]> {
 
     @Override
     protected String[] doInBackground(Void... params) {
+        /**
+         * get json
+         */
+        DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+        HttpPost httppost = new HttpPost("http://manager.piousbox.com/api/sites/view/travel-guide.mobi.json");
+        httppost.setHeader("Content-type", "application/json");
+        InputStream inputStream = null;
+        String result = null;
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+            org.apache.http.HttpEntity entity = response.getEntity();
+            inputStream = entity.getContent();
+            // json is UTF-8 by default
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line + "\n");
+            }
+            result = sb.toString();
+        } catch (Exception e) {
+            // Oops
+        }
+        finally {
+            try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+        }
+
+        /**
+         * parse json
+         */
         String[] out;
         try {
-            URL url = new URL("http://manager.piousbox.com/api/sites/view/travel-guide.mobi.json");
-            InputStream is = url.openStream();
-            javax.json.JsonReader rdr = Json.createReader(is);
-            JsonObject obj = rdr.readObject();
-            Log.v("abba", "obj:" + obj);
 
-            JsonObject obj2 = obj.getJsonObject("site");
-            Log.v("abba", "obj:" + obj2);
-
-            JsonArray news  = obj2.getJsonArray("newsitems");
-            Log.v("abba", "array:" + news);
-
-            out = new String[news.size()];
-
-            for (int i = 0; i < news.size(); i++) {
-                JsonObject temp = news.getJsonObject(i);
-                out[i] = temp.getString("description");
+            JSONObject jObject = new JSONObject(result);
+            JSONObject s = jObject.getJSONObject("site");
+            JSONArray arr = s.getJSONArray("newsitems");
+            out = new String[arr.length()];
+            for (int i=0; i<arr.length(); i++) {
+                out[i] = arr.getJSONObject(i).getString("description");
             }
-
+            Log.v("abba", "parsed json:" + out);
             return out;
-        } catch (Exception e) {
-            System.out.println("catastrophic exception:" + e.toString());
+        } catch (Exception squish) {
             return null;
         }
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        Log.v("abba", "onPostExecute");
+    protected void onPostExecute(String[] items) {
+        Log.v("abba", "onPostExecute:" + items);
 
         // Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
         // etResponse.setText(result);
