@@ -8,7 +8,10 @@
     android:fitsSystemWindows="true"
     tools:context="com.piousbox.training2.ItemListActivity">
 
-    <include layout="@layout/listview" />
+    <include
+        layout="@layout/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <!-- <EditText
         android:id="@+id/editText"
@@ -151,7 +154,7 @@
     <include
         layout="@layout/item_list"
         android:layout_width="match_parent"
-        android:layout_height="450dp" />
+        android:layout_height="wrap_content" />
 
 
 </android.support.design.widget.CoordinatorLayout>

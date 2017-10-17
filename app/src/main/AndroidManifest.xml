@@ -12,7 +12,7 @@
         <activity
             android:name=".NewsitemsListActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="labbl" >
+            android:label="news-and-trekker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
