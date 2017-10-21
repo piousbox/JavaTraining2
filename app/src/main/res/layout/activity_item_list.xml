@@ -8,153 +8,30 @@
     android:fitsSystemWindows="true"
     tools:context="com.piousbox.training2.ItemListActivity">
 
-    <include
-        layout="@layout/listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- <EditText
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/edit_message"
-        android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/button"
-        android:layout_marginLeft="16dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_send"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText"
-        app:layout_constraintLeft_toRightOf="@+id/editText"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" /> -->
-
-
-
-    <!-- <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Canal a ser enviado"
-        android:textSize="20sp"
-        />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Escriba el meser enviado"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Escriba el mensaje y luego clickee"
-        android:textSize="20sp"
-        android:layout_marginTop="40dp"
-        /> -->
-
-
-
-    <!-- <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical" >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:id="@+id/version_view"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom"
-        app:srcCompat="@android:drawable/ic_dialog_dialer" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:context=".MainActivity$PlaceholderFragment">
-            android:background="@drawable/my_custom_background"
+            android:textSize="14dp"
+            android:gravity="center_vertical"
+            android:text="hello world, version 0.0.0"/>
 
-            <TextView
-                android:id="@+id/id_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/id_label" />
+        <include
+            layout="@layout/listview"
+            android:layout_width="match_parent"
+            android:layout_height="140dp" />
 
-            <TextView
-                android:id="@+id/content_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/id_label"
-                android:layout_marginTop="25dp"
-                android:text="@string/content_label" />
-
-            <TextView
-                android:id="@+id/id_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="60dp"
-                android:layout_toRightOf="@+id/id_label"
-                android:text="@string/id_value" />
-
-            <TextView
-                android:id="@+id/content_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/id_value"
-                android:layout_alignTop="@+id/content_label"
-                android:text="@string/content_value" />
-
-            <TextView
-                android:id="@+id/test_btn"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:text="yadayada" />
-
-        </RelativeLayout>
-
-    </FrameLayout> -->
-
-    <include
-        layout="@layout/item_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        <include
+            layout="@layout/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

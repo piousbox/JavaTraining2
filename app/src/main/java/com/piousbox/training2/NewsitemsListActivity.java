@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -39,7 +40,6 @@ public class NewsitemsListActivity extends AppCompatActivity
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -49,6 +49,17 @@ public class NewsitemsListActivity extends AppCompatActivity
                 .build();
         mGoogleApiClient.connect();
         Log.v("abba", "connecting...");
+
+        // displaying gps data
+        gpsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, gpsItems);
+        gpsAdapter.add("test stuff");
+        gpsAdapter.add("test stuff 1");
+        gpsAdapter.add("test stuff 2");
+        gpsAdapter.add("test stuff 3");
+        gpsAdapter.add("test stuff 4");
+        gpsAdapter.add("test stuff 5");
+        final ListView listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(gpsAdapter);
     }
 
     @Override
@@ -56,7 +67,7 @@ public class NewsitemsListActivity extends AppCompatActivity
         super.onStart();
         new SiteNews(this).execute();
     }
-    
+
     @Override
     public void onConnectionFailed(ConnectionResult r) {
         Log.v("abba", "connection failed?"+ r);
@@ -67,6 +78,7 @@ public class NewsitemsListActivity extends AppCompatActivity
         Log.v("abba", "location changed"+ loc);
         Toast toast = Toast.makeText(this, "location:"+loc.getLatitude()+"::"+loc.getLongitude(), Toast.LENGTH_SHORT);
         toast.show();
+        gpsAdapter.add(""+ loc.getLatitude() +", "+ loc.getLongitude());
     }
 
     @Override
@@ -83,6 +95,7 @@ public class NewsitemsListActivity extends AppCompatActivity
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             Log.v("abba", "curr loc:" + mCurrentLocation);
+            gpsAdapter.add(""+ mCurrentLocation.getLatitude() +", "+ mCurrentLocation.getLongitude());
         } catch (SecurityException e) {
             Log.v("abba", "exception"+ e);
         }
