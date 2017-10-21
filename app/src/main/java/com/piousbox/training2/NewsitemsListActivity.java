@@ -1,108 +1,99 @@
 package com.piousbox.training2;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-import com.piousbox.training2.rest.Newsitem;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.piousbox.training2.rest.SiteNews;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class NewsitemsListActivity extends AppCompatActivity {
+public class NewsitemsListActivity extends AppCompatActivity
+    implements GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleApiClient.ConnectionCallbacks {
 
-    ThisAdapter _adapter;
-    static final ArrayList<String> _items = new ArrayList<String>();
+    private GoogleApiClient mGoogleApiClient = null;
+    private Location mCurrentLocation = null;
+
+    /**
+     * Display gps results without losing them
+     */
+    ArrayList<String> gpsItems = new ArrayList<String>();
+    ArrayAdapter<String> gpsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle()); */
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
-        /* LinearLayout item = (LinearLayout)findViewById(R.id.n_layout);
-        View child = getLayoutInflater().inflate(R.layout.newsitems_list2, null);
-        item.addView(child); */
-
-        /* ListView listView = getLayoutInflater().inflate(R.layout.n_list3, parent, false);
-        String[] from = { "php_key","c_key","android_key","hacking_key" };
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.newsitems_list, R.id.n_item, from);
-        listView.setAdapter(arrayAdapter); */
-
-        // From: http://www.vogella.com/tutorials/AndroidListView/article.html
-        // this works! _vp_ 20171017
-        /* final ListView listView = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter); */
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        mGoogleApiClient.connect();
+        Log.v("abba", "connecting...");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.v("abba", "onStart()");
         new SiteNews(this).execute();
     }
-
-    // trash
-    public class ThisAdapter extends RecyclerView.Adapter<ThisAdapter.ViewHolder> {
-        public ArrayList<Newsitem> mItems = new ArrayList<Newsitem>();
-
-        public ThisAdapter(List<Newsitem> items) {
-            mItems.add(new Newsitem("1", "title", "sum-desc"));
-            mItems.addAll(items);
-
-            Log.v("abba", "all these items:" + mItems.get(0));
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public Newsitem mItem;
-            public final View mView;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " and this string.";
-            }
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mItems.get(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.newsitems_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
+    
+    @Override
+    public void onConnectionFailed(ConnectionResult r) {
+        Log.v("abba", "connection failed?"+ r);
     }
+
+    @Override
+    public void onLocationChanged(Location loc) {
+        Log.v("abba", "location changed"+ loc);
+        Toast toast = Toast.makeText(this, "location:"+loc.getLatitude()+"::"+loc.getLongitude(), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void onConnected(Bundle b) {
+        Log.v("abba", "connected");
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1 * 1000);
+        mLocationRequest.setFastestInterval(1 * 1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
+
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            Log.v("abba", "curr loc:" + mCurrentLocation);
+        } catch (SecurityException e) {
+            Log.v("abba", "exception"+ e);
+        }
+
+        Toast toast = Toast.makeText(this, "location:"+mCurrentLocation, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {}
+
+
 
 }

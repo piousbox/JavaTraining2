@@ -71,11 +71,9 @@ public class SiteNews extends AsyncTask<Void, Void, String[]> {
             for (int i=0; i<arr.length(); i++) {
                 out[i] = arr.getJSONObject(i).getString("name");
             }
-            Log.v("abba", "parsed json:" + out.toString());
             String[] tempStr = new String[2];
             tempStr[0] = "a";
             tempStr[1] = "b";
-            Log.v("abba", "this is simple" + tempStr);
             return out;
         } catch (Exception squish) {
             return null;
@@ -84,11 +82,7 @@ public class SiteNews extends AsyncTask<Void, Void, String[]> {
 
     @Override
     protected void onPostExecute(String[] items) {
-        Log.v("abba", "onPostExecute:" + items);
-
         Activity a = myActivity.get();
-        Log.v("abba", "activity:" + a);
-
         if (a != null) {
             final ListView listView = (ListView) a.findViewById(R.id.listview);
             final ArrayAdapter adapter = new ArrayAdapter(a, android.R.layout.simple_list_item_1, items);
